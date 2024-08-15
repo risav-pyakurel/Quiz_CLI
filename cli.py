@@ -13,10 +13,6 @@ def Create_admin():
         file.write(f" admin_username:{static_username} \n")
         file.write(f"admin_password:{static_password}\n")
 
-
-
-
-
 def check_admin():
     try:
         with open(ADMIN_INFO, 'r') as file:
@@ -33,11 +29,15 @@ def check_admin_credentials(username, password):
 
         lines = file.readlines()
         stored_username = lines[0].strip().split(":")[1]
+        print(stored_username)
         stored_password = lines[1].strip().split(":")[1]
         if (stored_username == username) and (stored_password == password):
-            print("Welcome to the admin panel")
+            print("Welcome to the admin panel. Continue to add Questions")
+            return True
         else:
             print("Please enter the correct credentials")
+            return False
+
 
 
 
@@ -53,7 +53,7 @@ def login_option():
         check_admin_credentials(username,password)
 
     elif choice == 2:
-        pass
+        print("Welcome to the Quiz app!!!!!!!!")
 
 
 
@@ -63,6 +63,7 @@ def main():
     else:
         print("Admin already exists")
     login_option()
+    quiz_game()
 
 main()
 
