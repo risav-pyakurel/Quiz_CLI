@@ -1,4 +1,5 @@
 ADMIN_INFO = "Admin_Credentials.txt"
+QUIZ_QUESTIONS =  "questions.txt"
 
 
 def Set_Credentials():
@@ -38,6 +39,43 @@ def check_admin_credentials(username, password):
             print("Please enter the correct credentials")
             return False
 
+def read_questions():
+    questions = []
+    with open(QUIZ_QUESTIONS, 'r') as file:
+        current_question = {}
+        for line in file:
+            line =  line.strip()
+            if line.startswith("**") and line.endswith("**"):
+                if current_question:
+                    questions.append(current_question)
+                current_question = {"question": line.strip("**")}
+                current_question["options"] = []
+            elif line.startswith("-"):
+                current_question["options"].append(line[1:].strip())
+            elif line.startswith("**Answer:**"):
+                current_question["answer"] = line.split(":") [-1].strip()
+
+    if current_question:
+        questions.append(current_question)
+    return questions
+
+def quiz_game():
+    questions = read_questions()
+    print("Let's start the game!!!!")
+    score = 0
+    total_questions = len(questions)
+
+    for i, q in enumerate(questions, 1):
+        print(f"\nQuestion {i}: {q['question']}")
+        for option in q['options']:
+            print(option)
+
+
+
+
+
+
+
 
 
 
@@ -63,7 +101,9 @@ def main():
     else:
         print("Admin already exists")
     login_option()
+    read_questions()
     quiz_game()
+
 
 main()
 
