@@ -1,0 +1,18 @@
+def prepare_question():
+    final_question_array=[]
+    question =''
+    answer = []
+    correct_answer= ''
+    with open(QUIZ_QUESTIONS, 'r') as file:
+        for num,line in enumerate(file):
+            if (num+1)%6==1:
+                question=line
+            elif (num+1)%6>=2 and (num+1)%6<=5:
+                answer.append(line)
+            elif(num+1)%6 ==0:
+                correct_answer = line
+                one_set={'question':question,"choices":answer,"correct_answer":correct_answer}
+                final_question_array.append(one_set)
+                question=''
+                answer=[]
+                correct_answer=''

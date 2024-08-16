@@ -1,23 +1,18 @@
-
 1. **What is the capital of France?**
    - A) Madrid
    - B) Paris
    - C) Rome
    - D) Berlin
    Answer: B) Paris
-
 2. **Which planet is known as the Red Planet?**
    - A) Earth
    - B) Venus
    - C) Mars
    - D) Jupiter
    Answer: C) Mars
-
 3. **What is the boiling point of water?**
    - A) 50°C
    - B) 75°C
    - C) 100°C
    - D) 150°C
    Answer: C) 100°C
-
-
