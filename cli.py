@@ -1,5 +1,5 @@
 ADMIN_INFO = "Admin_Credentials.txt"
-QUIZ_QUESTIONS =  "questions.txt"
+QUIZ_QUESTIONS = "questions.txt"
 
 
 def Set_Credentials():
@@ -14,6 +14,7 @@ def Create_admin():
         file.write(f" admin_username:{static_username} \n")
         file.write(f"admin_password:{static_password}\n")
 
+
 def check_admin():
     try:
         with open(ADMIN_INFO, 'r') as file:
@@ -24,59 +25,65 @@ def check_admin():
         return False
     return False
 
-def check_admin_credentials(username, password):
 
-    with open(ADMIN_INFO, 'r') as file:
+def check_admin_credentials():
+    while True:
+        username = input("Enter the Username: ")
+        password = input("Enter the password: ")
+        with open(ADMIN_INFO, 'r') as file:
+            lines = file.readlines()
+            stored_username = lines[0].strip().split(":")[1]
+            print(stored_username)
+            stored_password = lines[1].strip().split(":")[1]
+            if (stored_username == username) and (stored_password == password):
+                print("Welcome to the admin panel. Continue to add Questions")
+                return True
+            else:
+                print("Please enter the correct credentials")
 
-        lines = file.readlines()
-        stored_username = lines[0].strip().split(":")[1]
-        print(stored_username)
-        stored_password = lines[1].strip().split(":")[1]
-        if (stored_username == username) and (stored_password == password):
-            print("Welcome to the admin panel. Continue to add Questions")
-            return True
-        else:
-            print("Please enter the correct credentials")
-            return False
+def add_questions():
+    with open(QUIZ_QUESTIONS,'a') as file:
+        question = input("Enter the question: ")
+        file.write(f"{question}\ n")
+        Option_A = input("Enter a Option A: ")
+        file.write(f"A) {Option_A} \n ")
+        Option_B = input("Enter a Option B: ")
+        file.write(f" B) {Option_B} \n")
+        Option_C = input("Enter a Option C: ")
+        file.write(f" C) {Option_C} \n")
+        Option_D = input("Enter a Option D: ")
+        file.write(f" D) {Option_D} \n")
 
-def read_questions():
-    questions = []
-    with open(QUIZ_QUESTIONS, 'r') as file:
-        current_question = {}
-        for line in file:
-            line =  line.strip()
-            if line.startswith("**") and line.endswith("**"):
-                if current_question:
-                    questions.append(current_question)
-                current_question = {"question": line.strip("**")}
-                current_question["options"] = []
-            elif line.startswith("-"):
-                current_question["options"].append(line[1:].strip())
-            elif line.startswith("**Answer:**"):
-                current_question["answer"] = line.split(":") [-1].strip()
+        answer = input("Enter the correct answer: ").upper()
+        print("Question is added!!")
 
-    if current_question:
-        questions.append(current_question)
-    return questions
+
 
 def quiz_game():
-    questions = read_questions()
-    print("Let's start the game!!!!")
-    score = 0
-    total_questions = len(questions)
+    print("Let's start the game!")
+    with open(QUIZ_QUESTIONS, 'r') as file:
+        lines = file.readline()
+        score = 0
+        question_num = 0
+    for i in range(0 , len(lines), 6):
+        question_num +=1
+        print(f"\n Question {question_num}: {lines[i].strip()} ")
+        print(lines[i+1].strip())
+        print(lines[i+2].strip())
+        print(lines[i+3].strip())
+        print(lines[i+4].strip())
 
-    for i, q in enumerate(questions, 1):
-        print(f"\nQuestion {i}: {q['question']}")
-        for option in q['options']:
-            print(option)
+        user_answer = input("Choose the correct Option: ").upper()
+        correct_answer= lines[i+5].strip().split(": ")[1]
 
+        if user_answer == correct_answer:
+            print("Your answer is correct! ")
+            score +=1
 
+        else:
+            print(f"Your given answer is incorrect. The correct answer {correct_answer}!!")
 
-
-
-
-
-
+    print(f" Quiz game is completed!!, You Scored: {score}/{question_num}")
 
 
 def login_option():
@@ -86,13 +93,14 @@ def login_option():
     choice = int(input("Enter login choice: \n"))
 
     if choice == 1:
-        username = input("Enter the username: \n")
-        password = input("Enter the password : \n")
-        check_admin_credentials(username,password)
-
+        if check_admin_credentials():
+            add_questions()
     elif choice == 2:
         print("Welcome to the Quiz app!!!!!!!!")
+        quiz_game()
 
+    else:
+        print("Invalid choice of option! You don't  deserve to play this!!!!!")
 
 
 def main():
@@ -101,9 +109,7 @@ def main():
     else:
         print("Admin already exists")
     login_option()
-    read_questions()
-    quiz_game()
+
 
 
 main()
-
