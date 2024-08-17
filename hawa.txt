@@ -16,3 +16,26 @@ def prepare_question():
                 question=''
                 answer=[]
                 correct_answer=''
+
+
+def show_questions():
+    print(final_question_array[0].get('question'))
+    print("Enter the right answer:")
+    print(final_question_array[0].get("choices")[0])
+    print(final_question_array[0].get("choices")[1])
+    print(final_question_array[0].get("choices")[2])
+    print(final_question_array[0].get("choices")[3])
+
+    # Get the user's answer
+    answer = input("Enter right answer (A/B/C/D): ").strip().upper()
+
+    # Extract the correct answer from the stored value, assuming format is "Answer: B) Paris"
+    correct_answer_full = final_question_array[0].get("correct_answer").strip()
+    correct_answer = correct_answer_full.split()[1][0].upper()
+
+    # Compare the first letter (e.g., "B") of the correct answer with user's input
+    if answer == correct_answer:
+        print("Hurrah! Right answer")
+    else:
+        print("You're a loser")
+

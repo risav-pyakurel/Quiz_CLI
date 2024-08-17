@@ -56,17 +56,6 @@ def add_questions():
         answer = input("Enter the correct answer: ").upper()
         print("Question is added!!")
 
-
-
-# def quiz_game():
-#     print("Let's start the game!")
-#     with open(QUIZ_QUESTIONS, 'r') as file:
-#         lines = file.readline()
-#         score = 0
-#         question_num = 0
-
-
-
 def login_option():
     print("Choose login mode as: \n")
     print("1. Admin login\n")
@@ -83,9 +72,9 @@ def login_option():
     else:
         print("Invalid choice of option! You don't  deserve to play this game!!!!!")
 
+final_question_array=[]
 
 def prepare_question():
-    final_question_array=[]
     question =''
     answer = []
     correct_answer= ''
@@ -93,7 +82,7 @@ def prepare_question():
         for num,line in enumerate(file):
             if (num+1)%6==1:
                 question=line
-            elif (num+1)%6>=2 and (num+1)%6<=5:
+            elif 2 <= (num + 1)%6 <= 5:
                 answer.append(line)
             elif(num+1)%6 ==0:
                 correct_answer = line
@@ -103,6 +92,22 @@ def prepare_question():
                 answer=[]
                 correct_answer=''
 
+
+
+def show_questions():
+    print(final_question_array[0].get('question'))
+    print("Enter right answer:")
+    print(final_question_array[0].get("choices")[0])
+    print(final_question_array[0].get("choices")[1])
+    print(final_question_array[0].get("choices")[2])
+    print(final_question_array[0].get("choices")[3])
+    answer=input("Enter right answer: ")
+    correct_answer_all= final_question_array[0].get("correct_answer")
+    correct_answer = correct_answer_all.split()[1][0]
+    if answer == correct_answer:
+        print("Hurrah right answer")
+    else:
+        print("You are a loser")
 def main():
     if not check_admin():
         Create_admin()
@@ -110,6 +115,7 @@ def main():
         print("Admin already exists")
     login_option()
     prepare_question()
+    show_questions()
 
 
 
