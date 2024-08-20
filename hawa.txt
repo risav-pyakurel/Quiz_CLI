@@ -39,3 +39,20 @@ def show_questions():
     else:
         print("You're a loser")
 
+
+
+
+ if not self.final_question_array:
+            print(" There is no question!")
+            return
+        q = self.final_question_array[0]
+        print(f" 1.{q['question']}")
+        print("Enter the right answer: ")
+        for choice in q['choices']:
+            print(choice)
+        answer = input("Enter your answer: ").upper().strip()
+        correct_answer = q['correct_answer'].strip().upper()
+        if answer == correct_answer:
+            print("Hurrah! Correct answer")
+        else:
+            print("YOU ARE A LOSER!")
