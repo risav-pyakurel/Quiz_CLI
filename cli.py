@@ -101,7 +101,7 @@ def show_questions():
     print(final_question_array[0].get("choices")[1])
     print(final_question_array[0].get("choices")[2])
     print(final_question_array[0].get("choices")[3])
-    answer=input("Enter right answer: ")
+    answer=input("Enter right answer: ").upper()
     correct_answer_all= final_question_array[0].get("correct_answer")
     correct_answer = correct_answer_all.split()[1][0]
     if answer == correct_answer:
